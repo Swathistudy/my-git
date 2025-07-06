@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Figma‑style Boxes</title>
+  <style>
+    /* Reset and base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f5;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Container for the boxes */
+    .accordion {
+      width: 100%;
+      max-width: 400px;
+    }
+    .box {
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: max-height 0.4s ease, border-color 0.3s;
+      max-height: 60px;
+      cursor: pointer;
+      position: relative;
+    }
+    .box.active {
+      border-color: #e91e63;
+      max-height: 300px;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header::after {
+      content: '+';
+      font-size: 24px;
+      transition: transform 0.3s;
+    }
+    .box.active .header::after {
+      content: '–';
+      transform: rotate(180deg);
+    }
+
+    /* Expandable content */
+    .content {
+      padding: 0 16px 16px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+      display: none;
+    }
+    .box.active .content {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .field {
+      margin: 12px 0;
+    }
+    .field label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    select {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .accordion {
+        max-width: 100%;
+      }
+      .header {
+        font-size: 16px;
+        padding: 12px;
+      }
+      select {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="accordion">
+    <!-- Box 1 -->
+    <div class="box" id="box1">
+      <div class="header">Box 1</div>
+      <div class="content">
+        <div class="field">
+          <label for="color1">Color</label>
+          <select id="color1" name="color1">
+            <option>Red</option>
+            <option>Green</option>
+            <option>Blue</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="size1">Size</label>
+          <select id="size1" name="size1">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="box" id="box2">
+      <div class="header">Box 2</div>
+      <div class="content">
+        <div class="field">
+          <label for="color2">Color</label>
+          <select id="color2" name="color2">
+            <option>Black</option>
+            <option>White</option>
+            <option>Yellow</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="size2">Size</label>
+          <select id="size2" name="size2">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+     <!-- Box 3 -->
+    <div class="box" id="box3">
+      <div class="header">Box 3</div>
+      <div class="content">
+        <div class="field">
+          <label for="color3">Color</label>
+          <select id="color3" name="color3">
+            <option>Purple</option>
+            <option>Orange</option>
+            <option>Gray</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="size3">Size</label>
+          <select id="size3" name="size3">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Accordion click behavior
+    document.querySelectorAll('.accordion .header').forEach(header => {
+      header.addEventListener('click', () => {
+        const parentBox = header.parentElement;
+        const isActive = parentBox.classList.contains('active');
+
+        document.querySelectorAll('.box').forEach(box => {
+          box.classList.remove('active');
+        });
+
+        if (!isActive) {
+          parentBox.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
